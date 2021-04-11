@@ -12,7 +12,6 @@ print("YouTube: https://www.youtube.com/channel/UCJ61JlXJckmO6yJr8BDRuGQ")
 print("▄▀▄ █▄░▄█ ▀ █▄░█ ▄▀▄ ▄▀ █▀▀▄ ▄▀▄ ▄▀▀ █░░ █▀▄ ▄▀▄ ▐▌░▐▌ ▒▄▀▄")
 print("█▀█ █░█░█ █ █░▀█ █░█ █░ █▐█▀ █▀█ ░▀▄ █▀▄ █▀█ █░█ ░▀▄▀░ ░▒▄▀")
 print("▀░▀ ▀░░░▀ ▀ ▀░░▀ ░▀░ ░▀ ▀░▀▀ ▀░▀ ▀▀░ ▀░▀ ▀▀░ ░▀░ ░░▀░░ ▒█▄▄")
-communities = {}
 chatlist = []
 chatnames = {}
 import amino
@@ -22,12 +21,10 @@ msg = input("Message/Сообщение: ")
 msgtype = input("MessageType/Тип сообщения: ")
 client=amino.Client()
 client.login(email=email, password=password)
-clients = client.sub_clients(size=100)
-x = 0
-for name, id in zip(clients.name, clients.comId):
-    print(f"{x + 1}.{name}")
-    communities[x] = str(id)
-    x+=1
+clients = client.sub_clients(start=0, size=1000)
+for x, name in enumerate(clients.name, 1):
+    print(f"{x}.{name}")
+communityid = clients.comId[int(input("Выберите сообщество/Select the community: "))-1]
 
 communityid = communities[int(input("Выберите сообщество/Select the community: "))-1]
 sub_client = amino.SubClient(comId=communityid, profile=client.profile)
